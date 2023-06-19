@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>todolist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+    <html xmlns:th="http://www.thymeleaf.org">
+</head>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    body {
+        background: #252525;
+    }
+
+    .todolist-div {
+        display: block;
+    }
+
+    .todo-write {
+        display: block;
+        margin: auto;
+        width: 500px;
+        height: 200px;
+        border-radius: 10px;
+        background: #272829;
+        position: relative;
+        margin-top: 100px;
+    }
+
+    .write {
+        display: block;
+        color: white;
+        background: 0;
+        font-size: 18px;
+        font-weight: bold;
+        position: relative;
+        top: 8px;
+        left: 12px;
+    }
+
+    .input-text-input {
+        display: block;
+    }
+
+    .todo-write-input {
+        display: block;
+        width: 480px;
+        height: 60px;
+        margin: auto;
+        border-radius: 10px;
+        border: 0;
+        background: #383c3c;
+        font-size: 16px;
+        outline: none;
+        padding-left: 10px;
+        position: relative;
+        top: 20px;
+        color: white;
+    }
+
+    .todo-write-input:focus {
+        outline: none;
+        border: 2px solid #4285F4;
+    }
+
+    .list-div {
+        display: block;
+        margin: auto;
+        width: 500px;
+        height: 140px;
+        border-radius: 10px;
+        background: #272829;
+        position: relative;
+        margin-top: 30px;
+    }
+
+    .todo-write-button {
+        display: block;
+        position: relative;
+        top: 50px;
+        width: 100px;
+        height: 35px;
+        margin: auto;
+        font-size: 16px;
+        border-radius: 5px;
+        outline: 0;
+        border: 0;
+        color: white;
+        background: #4285F4;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    .text-div {
+        display: block;
+        width: 480px;
+        height: 60px;
+        margin: auto;
+        border-radius: 10px;
+        border: 0;
+        background: #383c3c;
+        position: relative;
+        top: 10px;
+    }
+
+    .text {
+        color: white;
+        position: absolute;
+        top: 28px;
+        left: 20px;
+    }
+
+    .del-btn {
+        display: block;
+        width: 100px;
+        height: 35px;
+        margin: 30px auto;
+        text-align: center;
+        padding-top: 5px;
+        font-size: 16px;
+        border-radius: 5px;
+        outline: 0;
+        border: 0;
+        color: white;
+        background: #4285F4;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+    .sign_in_up {
+        position: absolute;
+        top: 10px;
+        left: 93.5%;
+    }
+
+    .sign_in_up a {
+        color: white;
+        text-decoration: 0;
+        cursor: pointer;
+    }
+
+    .sign_in_up a:nth-of-type(2) {
+        position: relative;
+        left: 5px;
+    }
+
+    .sign_in_up a:hover {
+        color: #4285F4;
+    }
+
+
+</style>
+
+<body>
+<div class="sign_in_up">
+    <a th:text="${user.getName()}" th:href="@{/logout}" style="color: white"></a>
+</div>
+
+<form action="/todoWrite" method="post" class="todo-write">
+    <p class="write">할일 추가</p>
+    <div class="input-text-input">
+
+    </div>
+    <input type="text" placeholder="할 일을 입력하세요" name="memo" class="todo-write-input"/>
+    <input type="submit" value="작성" class="todo-write-button"/>
+</form>
+
+<div class="list-div" th:each="todo : ${todoList}">
+    <div class="text-div">
+        <p class="text" th:text="${todo.getTodo_memo()}" style="color: white"></p>
+    </div>
+    <a type="submit" value="삭제" class="del-btn" th:href="@{/todo/del(id=${todo.getTodo_idx()})}">삭제</a>
+</div>
+
+</body>
+
+<script>
+
+    const inputBox = document.querySelector(".todo-write-input");
+    const button = document.querySelector(".todo-write-button");
+    const list_div = document.querySelector(".list-div");
+    const text = document.querySelector(".text");
+    const del_button = document.querySelector(".del-btn");
+
+    button.addEventListener('click', () => {
+        if (!inputBox.value)
+            alert("할 일을 적으세요.");
+
+        del_button.addEventListener('click', () => {
+            list_div.style.display = "none";
+            alert("할 일이 삭제되었습니다!");
+        })
+    })
+
+</script>
+
+
+</html>

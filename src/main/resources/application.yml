@@ -1,0 +1,15 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3307/test
+    username: mingyu
+    password: 1111
+    driver-class-name: org.mariadb.jdbc.Driver
+    #driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
